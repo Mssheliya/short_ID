@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Login Page</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            width: 80%;
+            height: 100vh;
+            margin: 0 auto;
+            padding: 0 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* border: 1px solid black; */
+        }
+        .Form_Outer_Box{
+            width: 600px;
+            /* height: 200px; */
+            padding: 20px 10px;
+            margin: 0 auto;
+            border-radius: 15px;
+            background-color: aliceblue;
+            /* border: 1px solid blue; */
+            /* display: flex;
+            justify-content: center;
+            align-items: center; */
+        }
+        .Form_Outer_Box h2{
+            text-align: center;
+            color: #555;
+        }
+        .Form_Outer_Box input{
+            width: 80%;
+            padding: 10px 8px;
+            border-radius: 20px;
+            margin: 10px 0px 10px 8%;
+            outline: none;
+            border: 0.5px solid #555;
+        }
+        .Form_Outer_Box p{
+            font-size: 12px;
+            color: red;
+            margin-left: 10%;
+            margin-top: 0px;
+        }
+        .Form_Outer_Box Button{
+            width: 140px;
+            padding: 10px 8px;
+            border-radius: 20px;
+            margin: 10px 0px 10px 40%;
+            cursor: pointer;
+            outline: none;
+            border: 0.5px solid #555;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container">
+        <div class="Form_Outer_Box">
+            <h2>Login</h2>
+            <form method="post" action="/api/user/login">
+                <input type="text" name="username" placeholder="Enter Your UserName">
+                <input type="text" name="password" placeholder="Enter Your Password">
+                <% if (locals.errmsg) { %>
+                    <p><%= errmsg %></p>
+                <% } %>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <%- include('./partials/script') %>
+</body>
+</html>

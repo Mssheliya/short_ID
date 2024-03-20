@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <title>URL Shortner </title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            height: 100vh;
+            margin: 0 auto;
+            padding: 0 5px;
+            /* border: 1px solid black; */
+        }
+
+        .container h2 {
+            text-align: center;
+            color: #555;
+            margin-top: 70px;
+        }
+        table {
+            margin: 140px auto;
+            border-spacing: 30px;
+        }
+        th,td{
+            text-align: center;
+            border: 0.5px solid #555;
+            padding: 5px 8px;
+        }
+        table a {
+            text-decoration: none;
+            color: #0052cc;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container">
+        
+        <% if (locals.urls) { %>
+            <div class="table_container mt-3">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SrNo</th>
+                            <th>Short ID</th>
+                            <th>URL</th>
+                            <th>TotalClicks</th>
+                            <th>RedirectURL</th>
+                            <th>DeleteURL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% urls.forEach((url,index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= index+1 %>
+                                </td>
+                                <td>
+                                    <%= url.shortID %>
+                                </td>
+                                <td>
+                                    <%= url.redirectURL %>
+                                </td>
+                                <td>
+                                    <%= url.visitHistory.length %>
+                                </td>
+                                <td>
+                                    <a href="/api/url/<%= url.shortID %>">RedirectURL</a>
+                                </td>
+                                <td>
+                                    <a href="/api/url/delete/<%= url._id %>">Delete</a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>
+    </div>
+
+    <%- include('./partials/script') %>
+</body>
+
+</html>
