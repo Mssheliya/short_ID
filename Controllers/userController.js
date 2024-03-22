@@ -23,6 +23,14 @@ const userLogin = async (req,res)=> {
     return res.redirect("/");
 }
 
+const getAllUsers = async(req,res)=> {
+    const userData = await userModel.find({});
+    res.render("user", {
+        userData,
+        user:req.user,
+    })
+}
+
 const userlogout = async (req,res)=> {
     res.clearCookie("token");
     res.redirect("/");
@@ -32,4 +40,5 @@ module.exports = {
     createUser,
     userLogin,
     userlogout,
+    getAllUsers,
 }

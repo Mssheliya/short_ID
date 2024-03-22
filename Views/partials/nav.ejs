@@ -31,7 +31,10 @@
                             <%= user.name %>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/api/user">Logout</a></li>
+                            <li><a class="dropdown-item" href="/api/user/logout">Logout</a></li>
+                            <% if (locals.user.role === "ADMIN") { %>
+                                <li><a class="dropdown-item" href="/api/user">Show All Users</a></li>
+                            <% } %>
                         </ul>
                     </li>
                 <% } else {%>
