@@ -24,6 +24,7 @@ const createURL = async(req,res)=> {
 
 const handleredirectURL = async(req,res)=> {
     const shortid = req.params.shortID;
+    // console.log(shortid);
    const redi = await urlModel.findOneAndUpdate({shortID:shortid},{
         $push: {
             visitHistory: {
@@ -35,11 +36,12 @@ const handleredirectURL = async(req,res)=> {
 }
 
 const deleteURL = async (req,res)=> {
-    const id = req.params.id;
-    // const conf = new confirm("Are you Sure you want to delete this ShortID");
-    // if(conf == false) return res.redirect("/api/url");
-    await urlModel.deleteOne({_id:id});
-    return res.redirect("/api/url");
+    const shortid = req.params.id;
+    // console.log(shortid);
+    await urlModel.deleteOne({ shortID:shortid });
+    // return res.redirect("/api/url");
+    // return res.render("",{msg:"Deleted Successfully"})
+    return console.log("Deleted Success FUlly");
 }
 
 const urlAnalatics = async(req,res)=> {

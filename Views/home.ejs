@@ -46,6 +46,7 @@
         
         <% if (locals.urls) { %>
             <div class="table_container mt-3">
+                <p></p>
                 <table>
                     <thead>
                         <tr>
@@ -59,7 +60,7 @@
                     </thead>
                     <tbody>
                         <% urls.forEach((url,index)=> { %>
-                            <tr>
+                            <tr id="tr">
                                 <td>
                                     <%= index+1 %>
                                 </td>
@@ -75,8 +76,8 @@
                                 <td>
                                     <a href="/api/url/<%= url.shortID %>">RedirectURL</a>
                                 </td>
-                                <td>
-                                    <a href="/api/url/delete/<%= url._id %>">Delete</a>
+                                <td id="delete">
+                                    Delete
                                 </td>
                             </tr>
                             <% }) %>
@@ -87,6 +88,31 @@
     </div>
 
     <%- include('./partials/script') %>
+    <script>
+        let deleteButtons = document.querySelectorAll("#tr #delete");
+        // console.log(deleteButtons);
+       deleteButtons.forEach((del)=> {
+            del.addEventListener("click", (e)=> {
+                let shortID= e.target.parentNode.querySelector("td:nth-child(2)").innerText;
+                // console.log(perent.querySelector("td:nth-child(2)").innerText);
+                let cnfm = confirm(`Are you sure you want to Delete this URL ${shortID}`);
+                if(cnfm === true){
+                      fetch(`http://localhost:8000/api/url/delete/${shortID}`)
+                      .then((responce)=> {
+                         
+                      })
+                      .then((result)=> {
+                           let msg = document.querySelector(".table_container p");
+                            console.log(msg);
+                      })
+                      .catch((error)=> console.log(error)) 
+                }else{
+                    console.log("not deleted");
+                }
+            })
+       })
+        
+    </script>
 </body>
 
 </html>
