@@ -3,116 +3,131 @@
 
 <head>
     <%- include('./partials/head') %>
-    <title>URL Shortner </title>
-    <style>
-        body {
-            margin: 0px;
-            padding: 0px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        <title>URL Shortner </title>
+        <style>
+            body {
+                margin: 0px;
+                padding: 0px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
 
-        .container {
-            width: 80%;
-            height: 100vh;
-            margin: 0 auto;
-            padding: 0 5px;
-            /* border: 1px solid black; */
-        }
+            .container {
+                width: 80%;
+                height: 100vh;
+                margin: 0 auto;
+                padding: 0 5px;
+                /* border: 1px solid black; */
+            }
 
-        .container h2 {
-            text-align: center;
-            color: #555;
-            margin-top: 70px;
-        }
-        table {
-            margin: 140px auto;
-            border-spacing: 30px;
-        }
-        th,td{
-            text-align: center;
-            border: 0.5px solid #555;
-            padding: 5px 8px;
-        }
-        table a {
-            text-decoration: none;
-            color: #0052cc;
-        }
-    </style>
+            .container h2 {
+                text-align: center;
+                color: #555;
+                margin-top: 70px;
+            }
+
+            table {
+                margin: 140px auto;
+                margin-bottom: 15px;
+                border-spacing: 30px;
+            }
+
+            th,
+            td {
+                text-align: center;
+                border: 0.5px solid #555;
+                padding: 5px 8px;
+            }
+
+            table a {
+                text-decoration: none;
+                color: #0052cc;
+            }
+
+            #delete {
+                color: red;
+                cursor: pointer;
+            }
+        </style>
 </head>
 
 <body>
     <%- include('./partials/nav') %>
-    <div class="container">
-        
-        <% if (locals.urls) { %>
-            <div class="table_container mt-3">
-                <p></p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>SrNo</th>
-                            <th>Short ID</th>
-                            <th>URL</th>
-                            <th>TotalClicks</th>
-                            <th>RedirectURL</th>
-                            <th>DeleteURL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% urls.forEach((url,index)=> { %>
-                            <tr id="tr">
-                                <td>
-                                    <%= index+1 %>
-                                </td>
-                                <td>
-                                    <%= url.shortID %>
-                                </td>
-                                <td>
-                                    <%= url.redirectURL %>
-                                </td>
-                                <td>
-                                    <%= url.visitHistory.length %>
-                                </td>
-                                <td>
-                                    <a href="/api/url/<%= url.shortID %>">RedirectURL</a>
-                                </td>
-                                <td id="delete">
-                                    Delete
-                                </td>
-                            </tr>
-                            <% }) %>
-                    </tbody>
-                </table>
-            </div>
-            <% } %>
-    </div>
+        <div class="container">
 
-    <%- include('./partials/script') %>
-    <script>
-        let deleteButtons = document.querySelectorAll("#tr #delete");
-        // console.log(deleteButtons);
-       deleteButtons.forEach((del)=> {
-            del.addEventListener("click", (e)=> {
-                let shortID= e.target.parentNode.querySelector("td:nth-child(2)").innerText;
-                // console.log(perent.querySelector("td:nth-child(2)").innerText);
-                let cnfm = confirm(`Are you sure you want to Delete this URL ${shortID}`);
-                if(cnfm === true){
-                      fetch(`http://localhost:8000/api/url/delete/${shortID}`)
-                      .then((responce)=> {
-                         
-                      })
-                      .then((result)=> {
-                           let msg = document.querySelector(".table_container p");
-                            console.log(msg);
-                      })
-                      .catch((error)=> console.log(error)) 
-                }else{
-                    console.log("not deleted");
-                }
-            })
-       })
-        
-    </script>
+            <% if (locals.urls) { %>
+                <div class="table_container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SrNo</th>
+                                <th>Short ID</th>
+                                <th>URL</th>
+                                <th>TotalClicks</th>
+                                <th>RedirectURL</th>
+                                <th>DeleteURL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach((url,index)=> { %>
+                                <tr id="tr">
+                                    <td>
+                                        <%= index+1 %>
+                                    </td>
+                                    <td>
+                                        <%= url.shortID %>
+                                    </td>
+                                    <td>
+                                        <%= url.redirectURL %>
+                                    </td>
+                                    <td>
+                                        <%= url.visitHistory.length %>
+                                    </td>
+                                    <td>
+                                        <a href="/api/url/<%= url.shortID %>">RedirectURL</a>
+                                    </td>
+                                    <td id="delete">
+                                        Delete
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center;"></p>
+                </div>
+                <% } %>
+        </div>
+
+        <%- include('./partials/script') %>
+            <script>
+                //Script For Delete Url
+                let deleteButtons = document.querySelectorAll("#tr #delete");
+                let deletedMsg = document.querySelector(".table_container p");
+                    deletedMsg.style.color = "green"
+                deleteButtons.forEach((del) => {
+                    del.addEventListener("click", (e) => {
+                        let shortID = e.target.parentNode.querySelector("td:nth-child(2)").innerText;
+                        // console.log(perent.querySelector("td:nth-child(2)").innerText);
+                        let cnfm = confirm(`Are you sure you want to Delete this URL ${shortID}`);
+                        if (cnfm === true) {
+                            fetch(`http://localhost:8000/api/url/delete/${shortID}`)
+                                .then((responce) => {
+                                    return responce.json();
+                                })
+                                .then((result) => {
+                                    deletedMsg.innerHTML = `${result.msg}.`
+                                    // console.log(result.msg);
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000)
+                                })
+                                .catch((error) => console.log(error));
+                        } else {
+                            console.log("not deleted");
+                        }
+                    })
+                })
+
+            </script>
 </body>
 
 </html>

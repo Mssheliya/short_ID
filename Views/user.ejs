@@ -11,80 +11,184 @@
                 padding: 0px;
                 font-family: Arial, Helvetica, sans-serif;
             }
-            .container {
+            ._container {
                 width: 80%;
                 height: 100vh;
+                position: relative;
+                padding: 5px 10px;
                 margin: 0 auto;
-                padding: 0 5px;
-                /* border: 1px solid black; */
+                /* border: 0.5px solid black; */
+                display: flex;
+                align-items: start;
+                justify-content: center;
             }
-            .container h2 {
-                text-align: center;
-                color: #555;
-                margin-top: 70px;
+            ._row {
+                position: relative;
+                width: 100%;
+                /* height: 100%; */
+                margin-top: 50px;
+                /* border: 0.5px solid red; */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px 0px;
+                flex-wrap: wrap;
             }
-            table {
-                margin: 140px auto;
-                border-spacing: 30px;
+            .cards {
+                position: relative;
+                height: 250px;
+                width: 380px;
+                border: 0.5px solid #5555;
+                border-radius: 10px;
+                margin-bottom: 20px;
+                margin-left: 20px;
+                cursor: pointer;
+                padding: 5px;
+                display: flex;
             }
-            th,
-            td {
-                text-align: center;
+            .cards .left {
+                width: 70%;
+                height: 100%;
+                padding-top: 10px;
+                /* border: 0.5px solid green; */
+                /* padding: 10px; */
+                /* border-right: 0.5px solid #555;
+                    border-radius: 10px; */
+            }
+            .cards .left .name,
+            .email,
+            .contact,
+            .role {
+                /* width: 100%; */
+                height: 19%;
+                display: flex;
+                align-items: center;
+                padding-left: 10px;
+                /* border: 0.5px solid limegreen; */
+            }
+            .cards .right {
+                width: 30%;
+                height: 100%;
+                /* border: 0.5px solid orange; */
+            }
+            .right .top {
+                position: relative;
+                width: 100%;
+                height: 35%;
+                /* border: 0.5px solid black; */
+                display: flex;
+                /* align-items: center; */
+                justify-content: center;
+            }
+            .right .top img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                margin-top: 8px;
+            } 
+            .right .middle {
+                width: 100%;
+                height: 25%;
+                /* border: 0.5px solid black; */
+            }
+            .right .bottom {
+                width: 100%;
+                height: 38%;
+                /* border: 0.5px solid black; */
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                padding: 10px;
+            }
+            .right .bottom .color-theme {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
                 border: 0.5px solid #555;
-                padding: 5px 8px;
             }
-            table a {
-                text-decoration: none;
-                color: #0052cc;
-            }
+            .right .bottom .color-theme:nth-child(1) {background-color: lightblue; }        
+            .right .bottom .color-theme:nth-child(2) {background-color: lemonchiffon; }        
+            .right .bottom .color-theme:nth-child(3) {background-color: lightcoral; } 
+            .right .bottom .color-theme:nth-child(4) {background-color: lightgreen; }        
+            .right .bottom .color-theme:nth-child(5) {background-color: lightsalmon; }
+            .right .bottom .color-theme:nth-child(6) {background-color: white; }
         </style>
 </head>
 
 <body>
     <%- include('./partials/nav') %>
-        <div class="container">
-
-            <% if (locals.userData) { %>
-                <div class="table_container mt-3">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Sr NO</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>UserName</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% userData.forEach((user,index)=> { %>
-                                <tr>
-                                    <td>
-                                        <%= index+1 %>
-                                    </td>
-                                    <td>
-                                        <%= user.name %>
-                                    </td>
-                                    <td>
-                                        <%= user.email %>
-                                    </td>
-                                    <td>
-                                        <%= user.username %>
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                                <% }) %>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="_container">
+            <div class="_row">
+                <% if (locals.userData) { %>
+                    <% userData.forEach((user,index) => { %>
+                        <div class="cards" id="<%= index+1 %>">
+                            <div class="left">
+                                <div class="name">
+                                    <span style="font-weight: bold;">Name:-</span><span style="margin-left: 5px;"><%=user.name %></span>
+                                </div>
+                                <div class="email">
+                                    <span style="font-weight: bold;">Email:-</span><span style="margin-left: 5px;">
+                                        <%= user.email %></span>
+                                </div>
+                                <div class="contact">
+                                    <span style="font-weight: bold;">UserName:-</span><span style="margin-left: 5px;">
+                                        <%= user.username %></span>
+                                </div>
+                                <div class="role">
+                                    <span style="font-weight: bold;">Role:-</span><span style="margin-left: 5px;"><%= user.role %> </span>
+                                </div>
+                                <div class="name">
+                                    <span style="font-weight: bold;">Name:-</span><span style="margin-left: 5px;"> Mustafa</span>
+                                </div>
+                            </div> <!--End of Left Div-->
+                            <div class="right">
+                                <div class="top">
+                                    <img src="./images/background.png" alt="">
+                                </div>
+                                <div class="middle">
+            
+                                </div>
+                                <div class="bottom">
+                                    <div class="color-theme" id="lightblue"></div>
+                                    <div class="color-theme" id="lemonchiffon"></div>
+                                    <div class="color-theme" id="lightcoral"></div>
+                                    <div class="color-theme" id="lightgreen"></div>
+                                    <div class="color-theme" id="lightsalmon"></div>
+                                    <div class="color-theme" id="white"></div>
+                                </div>
+                            </div> <!--End of Right Div-->
+                        </div> <!--End of Card-->
+                    <% }) %>
                 <% } %>
-        </div>
-
-
-        <%- include('./partials/script') %>
+            </div> <!--End of Row-->
+        </div> <!--End of Container-->
+    <%- include('./partials/script') %>
 </body>
+<script>
+    //Write JavaScript Funtion For Cahnge Theme Color
+    function color_chnager(theme,card_id){
+        let cards = document.querySelectorAll(".cards");
+        cards.forEach( (card)=> {
+            if (card.id === card_id) {
+                card.style.backgroundColor = theme;
+            }
+        } )
+        
+    };
+    let colors = document.querySelectorAll(".bottom .color-theme");
+    colors.forEach( (color)=> {
+        color.addEventListener("click", (e)=> {
+            let parent_card = e.target.parentNode.parentNode.parentNode;
+            let card_id = e.target.parentNode.parentNode.parentNode.id;
+            
+            parent_card.querySelectorAll(".right .bottom .color-theme").forEach( (btn)=> {
+                btn.style.border = "1px solid #555";
+            });
+            e.target.style.border = "1px solid blue"; //Script For Color_theme Border
 
+            color_chnager(e.target.id,card_id); //Call Color_Change Function
+        })
+    } )
+</script>
 </html>

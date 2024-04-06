@@ -40,8 +40,8 @@ const deleteURL = async (req,res)=> {
     // console.log(shortid);
     await urlModel.deleteOne({ shortID:shortid });
     // return res.redirect("/api/url");
-    // return res.render("",{msg:"Deleted Successfully"})
-    return console.log("Deleted Success FUlly");
+    return res.json({"msg":"Deleted Successfully"})
+    // return console.log("Deleted Success FUlly");
 }
 
 const urlAnalatics = async(req,res)=> {
