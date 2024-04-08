@@ -36,9 +36,17 @@ const userlogout = async (req,res)=> {
     res.redirect("/");
 }
 
+const deleteUser = async (req,res)=> {
+    const id = req.params.id;
+    // console.log(id);
+    await userModel.deleteOne({_id:id});
+    res.json({"msg": "Deleted Successfully"})
+}
+
 module.exports = {
     createUser,
     userLogin,
     userlogout,
     getAllUsers,
+    deleteUser,
 }
