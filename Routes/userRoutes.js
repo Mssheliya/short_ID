@@ -7,9 +7,10 @@ const {
     userlogout,
     getAllUsers,
     deleteUser,
+    upload,
 } = require("../Controllers/userController");
 
-Route.post("/", createUser);
+Route.post("/", upload.single("userImageURL"), createUser);
 Route.post("/login", userLogin);
 Route.get("/", restrictTo(["ADMIN"]), getAllUsers);
 Route.get("/logout", userlogout);

@@ -160,7 +160,7 @@
                             </div> <!--End of Left Div-->
                             <div class="right">
                                 <div class="top">
-                                    <img src="./images/background.png" alt="">
+                                    <img src="<%= user.userImageURL %>" alt="">
                                 </div>
                                 <div class="middle">
                                     <i class="fa-solid fa-pen-to-square" id="editUser"></i>
@@ -182,53 +182,56 @@
         </div> <!--End of Container-->
     <%- include('./partials/script') %>
 </body>
-<script>
-    //Write JavaScript Funtion For Cahnge Theme Color
-    function color_chnager(theme,card_id){
+<Script>
+    //Write JavaScript Funtion For Change Theme Color
+    function color_chnager(theme, card_id) {
         let cards = document.querySelectorAll(".cards");
-        cards.forEach( (card)=> {
+        cards.forEach((card) => {
             if (card.id === card_id) {
                 card.style.backgroundColor = theme;
             }
-        } )
-        
+        })
+
     };
     let colors = document.querySelectorAll(".bottom .color-theme");
-    colors.forEach( (color)=> {
-        color.addEventListener("click", (e)=> {
+    colors.forEach((color) => {
+        color.addEventListener("click", (e) => {
             let parent_card = e.target.parentNode.parentNode.parentNode;
             let card_id = e.target.parentNode.parentNode.parentNode.id;
-            
-            parent_card.querySelectorAll(".right .bottom .color-theme").forEach( (btn)=> {
+
+            parent_card.querySelectorAll(".right .bottom .color-theme").forEach((btn) => {
                 btn.style.border = "1px solid #555";
             });
             e.target.style.border = "1px solid blue"; //Script For Color_theme Border
 
-            color_chnager(e.target.id,card_id); //Call Color_Change Function
+            color_chnager(e.target.id, card_id); //Call Color_Change Function
         })
     });
 
     //Write JavaScript For Dlete User
     function deleteUser(user_id) {
         let cnfm = confirm(`Are You Sure You Want to delete this User <i>${user_id}</i>`);
-        if(cnfm){
+        if (cnfm) {
             fetch(`http://localhost:8000/api/user/delete/${user_id}`)
-            .then((res)=> res.json())
-            .then((result)=> {
-                console.log("deleted");
-            })
-            .catch((err)=> console.log(err))
+                .then((res) => res.json())
+                .then((result) => {
+                    console.log("deleted");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000)
+                })
+                .catch((err) => console.log(err))
         }
-        else{
+        else {
             console.log("not Deleted");
         }
     }
     let users = document.querySelectorAll(".middle #deleteUser");
-    users.forEach( (user)=> {
-        user.addEventListener("click", (e)=> {
+    users.forEach((user) => {
+        user.addEventListener("click", (e) => {
             let user_id = e.target.parentNode.parentNode.parentNode.querySelector(".left ._id span:last-child").innerText;
             deleteUser(user_id);
         })
-    })
-</script>
+    });
+</Script>
 </html>

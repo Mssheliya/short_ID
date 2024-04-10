@@ -16,6 +16,7 @@ connectMongoDB("mongodb://127.0.0.1:27017/Short_id");
 
 // middelwares
 app.use(express.urlencoded({extended:false}));
+app.use(express.static(path.resolve("./public")));
 app.use(express.json());
 app.use(cookieParser());
 app.use(checkforAuthentication);

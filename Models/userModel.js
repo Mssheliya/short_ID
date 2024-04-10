@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
         type:String,
         required:true,
         default:"USER",
+    },
+    userImageURl:{
+        type:String,
+        default: "./userImages/useravatar.png",
     }
     
 },{timestamps:true});

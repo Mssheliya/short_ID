@@ -59,11 +59,12 @@
     <div class="container">
         <div class="Form_Outer_Box">
             <h2>Sign Up</h2>
-            <form method="post" action="/api/user">
+            <form method="post" action="/api/user" enctype="multipart/form-data">
                 <input type="text" name="name" placeholder="Enter Your Name">
                 <input type="text" name="email" placeholder="Enter You Email">
                 <input type="text" name="username" placeholder="Enter Your UserName">
                 <input type="text" name="password" placeholder="Enter Your Password">
+                <input type="file" name="userImageURL">
                 <button type="submit">Sign up</button>
             </form>
         </div>

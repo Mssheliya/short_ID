@@ -1,6 +1,5 @@
 const urlModel = require("../Models/urlModel");
 const shortID = require("shortid"); 
-const confirm = require("prompt-confirm");
 
 const createURL = async(req,res)=> {
     const body = req.body;
