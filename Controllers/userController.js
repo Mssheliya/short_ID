@@ -4,29 +4,13 @@ const {setUser} = require("../Services/auth");
 const multer = require("multer");
 const path = require("path");
 
-const storage = multer.diskStorage({
-    destination:(req,file,cb)=>{
-        cb(null, path.resolve("../public/userImages"));
-    },
-    filename:(req,file,cb)=>{
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-const upload = multer({storage});
-
 const createUser = async (req,res)=> {
     const {name,email,username,password} = req.body;
-    console.log(req.file);
-    let userImageURL = "./userImages/useravatar.png";
-    if(req.file !== undefined){
-        userImageURL = `userImages/${req.file.filename}`
-    }
     await userModel.create({
         name,
         email,
         username,
         password,
-        userImageURL: userImageURL,
     });
     res.redirect("/login");
 };
@@ -67,5 +51,4 @@ module.exports = {
     userlogout,
     getAllUsers,
     deleteUser,
-    upload,
 }
